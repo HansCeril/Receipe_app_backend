@@ -12,3 +12,22 @@ services:
       - ./app:/app
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=hans
+      - DB_PASS=hansdev
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:14.15-alpine
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=hans
+      - POSTGRES_PASSWORD=hansdev
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
